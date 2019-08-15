@@ -141,10 +141,11 @@ local.properties
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
+.idea/**/modules.xml
+ *.iml
+ modules.xml
+ .idea/misc.xml
+ *.ipr
 
 
 # End of https://www.gitignore.io/api/java,linux,macos,windows,java-web
