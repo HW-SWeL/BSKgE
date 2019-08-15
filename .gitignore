@@ -153,3 +153,4 @@ WebApp.iml
 
 *.nq
 HELP.md
+src/main/resources/database.properties
