@@ -146,7 +146,7 @@ local.properties
  modules.xml
  .idea/misc.xml
  *.ipr
-
+WebApp.iml
 
 # End of https://www.gitignore.io/api/java,linux,macos,windows,java-web
 
