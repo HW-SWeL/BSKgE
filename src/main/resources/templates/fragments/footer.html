@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+</head>
+<body>
+
+	<div class="container" th:fragment="footer">
+		<hr style="height:10px; color:#0B794B; background-color:#0B794B; border:none;" />
+		<div class="row">
+			<div class="col" style="text-align: center;">
+				&copy;
+				<script type="text/javascript">
+						document.write(new Date().getFullYear());
+					</script>
+					<a href="https://www.macs.hw.ac.uk/SWeL">Heriot-Watt Semantic
+						Web Lab</a>, <a href="https://www.macs.hw.ac.uk">School of
+						Mathematical and Computer Sciences</a>, <a href="https://www.hw.ac.uk">Heriot-Watt
+						University</a>, Scotland.
+			</div>
+		</div>		
+		<div class="row">
+			<div class="col" style="text-align: center;">
+				Funded by <a
+					href="https://elixir-europe.org/about-us/how-funded/eu-projects/excelerate"><em>ELIXIR-EXCELERATE</em></a> <img class="center-block"
+					style="width: 40px; height: 40px;"
+					th:src="@{images/elixir.jpg}"
+					alt="Elixir logo" />.
+			</div>					
+		</div>
+	</div>
+
+
+	<!--  BOOTSTRAP, JQUERY ETC -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</body>
+</html>

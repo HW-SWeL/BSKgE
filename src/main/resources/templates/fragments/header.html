@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">	
+</head>
+<body>
+
+	<div class="container" th:fragment="header">
+		<div class="row">&nbsp;</div>
+		<div class="row">
+			<div class="col-md-5">
+				<a href="https://bioschemas.org"><img th:src="@{images/bs.png}"
+					width="80" height="80" /></a> &nbsp; <a href="https://www.hw.ac.uk"><img
+					th:src="@{images/hw.jpg}" width="117" height="60" /></a> &nbsp; <a
+					href="https://www.macs.hw.ac.uk/SWeL/"><img
+					th:src="@{images/swel.png}" width="102" height="60" /></a>
+			</div>
+			<!-- <div class="col">&nbsp;</div> -->
+			<div class="col-md-7">
+				<h2 class="text-left" style="color: #0B794B;">Bioschemas
+					Knowledge Graph Explorer</h2>
+			</div>
+		</div>
+		<hr
+			style="height: 10px; color: #0B794B; background-color: #0B794B; border: none;" />
+		<div class="row">
+			<div class="col">
+				<a th:href="@{/}" style="color: #0B794B;">HOME</a> &nbsp; <a
+					th:href="@{list(type=DataCatalog)}">DataCatalog</a> <!-- <a
+					th:href="@{list(type=DataRecord)}">DataRecord</a> --> <a
+					th:href="@{list(type=Dataset)}">Dataset</a> <a
+					th:href="@{list(type=MolecularEntity)}">MolecularEntity</a> <a
+					th:href="@{list(type=Organization)}">Organization</a> 
+					<a th:href="@{list(type=Sample)}">Sample</a>  
+			</div>
+		</div>
+		<hr
+			style="height: 2px; color: #0B794B; background-color: #0B794B; border: none;" />
+	</div>
+
+
+	<!--  BOOTSTRAP, JQUERY ETC -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</body>
+</html>

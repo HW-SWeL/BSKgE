@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>BKgE</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+    <!--  BOOTSTRAP -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <style>
+        .top-buffer {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!--  header goes here -->
+<div class="container" th:replace="fragments/header :: header">
+    <p>header</p>
+</div>
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-lg">
+            <h5>Details:</h5>
+        </div>
+    </div>
+
+    <div class="row"
+         th:if="${#maps.containsKey(details, 'name')} and ${not #arrays.isEmpty(details.name)}">
+        <div class="col-2">
+            <b>name</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.name}"> <span
+                        th:text="${instance}"/>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'alternateName')} and ${not #arrays.isEmpty(details.alternateName)}">
+        <div class="col-2">
+            <b>alternateName</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.alternateName}"> <span
+                        th:text="${instance}"/> &nbsp;
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'identifier')} and ${not #arrays.isEmpty(details.identifier)}">
+        <div class="col-2">
+            <b>identifier</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.identifier}">
+					<div class="row">
+						<div class="col"
+                             th:if="${not #strings.startsWith(instance, 'http')}"
+                             th:text="${instance}"/>
+						<div class="col" th:if="${#strings.startsWith(instance, 'http')}">
+							<a th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'title')} and ${not #arrays.isEmpty(details.title)}">
+        <div class="col-2">
+            <b>title</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.title}">
+					<span th:text="${instance}"/>
+				</span>
+        </div>
+    </div>
+
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'description')} and ${not #arrays.isEmpty(details.description)}">
+        <div class="col-2">
+            <b>description</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.description}">
+					<span th:if="*{#strings.length(instance) <= 90}" th:text="${instance}"/>
+					<span th:if="*{#strings.length(instance) > 90}">
+						<span><span th:text="${#strings.abbreviate(instance, 90)}"/>
+						<a data-toggle="collapse" href="#collapseDescription" aria-expanded="false"
+                           aria-controls="collapseExample">+/-</a> </span>
+						<span class="collapse" id="collapseDescription"
+                              th:text="${#strings.prepend(#strings.substring(instance, 87, #strings.length(instance)),'... ')} "/>
+					</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'keywords')} and ${not #arrays.isEmpty(details.keywords)}">
+        <div class="col-2">
+            <b>keywords</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.keywords}">
+					<div class="row">
+						<div class="col" th:text="${instance}"></div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'url')} and ${not #arrays.isEmpty(details.url)} and ${not #strings.equals(details.url[0], url)}">
+        <div class="col-2">
+            <b>url &#x2190;</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.url}"> <span
+                        th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                        th:text="${instance}"/> <a
+                        th:if="${#strings.startsWith(instance, 'http')}"
+                        th:href="@{inspect(url=${instance})}" th:text="${instance}"/> <a
+                        th:if="${#strings.startsWith(instance, 'ftp')}"
+                        th:href="${instance}" th:text="${instance}"/>
+				</span>
+        </div>
+    </div>
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'url')} and ${not #arrays.isEmpty(details.url)} and ${#strings.equals(details.url[0], url)}">
+        <div class="col-2">
+            <b>url &#x2193;</b>
+        </div>
+        <div class="col-10" align="left">
+            <span th:text="${url}"/>
+            <!-- 						<span th:each="instance : ${details.url}"> <span
+                        th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                        th:text="${instance}" /> <a
+                        th:if="${#strings.startsWith(instance, 'http')}"
+                        th:href="@{inspect(url=${instance})}" th:text="${instance}" /> <a
+                        th:if="${#strings.startsWith(instance, 'ftp')}"
+                        th:href="${instance}" th:text="${instance}" />
+                    </span> -->
+        </div>
+    </div>
+    <div class="row top-buffer"
+         th:if="${not #maps.containsKey(details, 'url') or #arrays.isEmpty(details.url)} and ${#strings.startsWith(url, 'https://bioschemas') or #strings.startsWith(url, 'http://bioschemas')}">
+        <!-- <span th:if="${#strings.startsWith(url, 'https://bioschemas') or #strings.startsWith(url, 'http://bioschemas')}"> -->
+        <div class="col-2">
+            <b>url &#x2193;</b>
+        </div>
+        <div class="col-10" align="left">
+            <span th:text="${url}"/>
+        </div>
+    </div>
+    <div class="row top-buffer"
+         th:if="${not #maps.containsKey(details, 'url') or #arrays.isEmpty(details.url)} and ${not #strings.startsWith(url, 'https://bioschemas') and not #strings.startsWith(url, 'http://bioschemas')}">
+        <!-- <span th:if="${#strings.startsWith(url, 'https://bioschemas') or #strings.startsWith(url, 'http://bioschemas')}"> -->
+        <div class="col-2">
+            <b>url &#x2192;</b>
+        </div>
+        <div class="col-10" align="left">
+            <a th:href="${url}" th:text="${url}"/>
+        </div>
+    </div>
+
+    <!-- 				<div class="row"
+                th:unless="${#maps.containsKey(details, 'url')} and ${not #arrays.isEmpty(details.url)} and ${not #strings.startsWith(url, 'https://bioschemas') and not #strings.startsWith(url, 'http://bioschemas') }">
+                <span
+                    th:if="${not(#strings.startsWith(url, 'https://bioschemas') or #strings.startsWith(url, 'http://bioschemas'))}">
+                    <div class="col-2">
+                        <b>url &#x2192;</b>
+                    </div>
+                    <div class="col-10" align="left">
+                        <span
+                            th:if="${not #strings.startsWith(url, 'http') and not #strings.startsWith(url, 'ftp')}"
+                            th:text="${url}" /> <a
+                            th:if="${#strings.startsWith(url, 'http') and not (#strings.startsWith(url, 'https://bioschemas') or #strings.startsWith(url, 'http://bioschemas'))}"
+                            th:href="${url}" th:text="${url}" /> <a
+                            th:if="${#strings.startsWith(url, 'http') and (#strings.startsWith(url, 'https://bioschemas') or #strings.startsWith(url, 'http://bioschemas'))}"
+                            th:href="@{inspect(url=${url})}" th:text="${url}" /> <a
+                            th:if="${#strings.startsWith(url, 'ftp')}" th:href="${url}"
+                            th:text="${url}" />
+                    </div> -->
+    <!-- 	</span>
+                <span th:if="${#strings.startsWith(url, 'https://bioschemas') or #strings.startsWith(url, 'http://bioschemas')}">
+                    <div class="col-2">
+                        <b>url B</b>
+                    </div>
+                    <div class="col-10" align="left">
+                        <span th:text="${url}" />
+                    </div>
+                </span>
+            </div> -->
+
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'sameAs')} and ${not #arrays.isEmpty(details.sameAs)}">
+        <div class="col-2">
+            <b>sameAs</b>
+        </div>
+
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.sameAs}">
+					<div class="row">
+						<div class="col">
+							<span th:if="${not #strings.startsWith(instance, 'http')}"
+                                  th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'subjectOf')} and ${not #arrays.isEmpty(details.subjectOf)}">
+        <div class="col-2">
+            <b>subjectOf</b>
+        </div>
+
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.subjectOf}">
+					<div class="row">
+						<div class="col">
+							<span th:if="${not #strings.startsWith(instance, 'http')}"
+                                  th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'publication')} and ${not #arrays.isEmpty(details.publication)}">
+        <div class="col-2">
+            <b>publication</b>
+        </div>
+        <div class="col-10" align="left">
+            <div class="col" th:text="${instance}"/>
+            <span th:each="instance : ${details.publication}"> <span
+                    th:if="${not #strings.startsWith(instance, 'http')}"
+                    th:text="${instance}"/> <a
+                    th:if="${#strings.startsWith(instance, 'http')}"
+                    th:href="@{inspect(url=${instance})}"><img
+                    src="images/paperIcon.png"/></a>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'citation')} and ${not #arrays.isEmpty(details.citation)}">
+        <div class="col-2">
+            <b>citation</b>
+        </div>
+        <div class="col-10" align="left">
+            <div class="col" th:text="${instance}"/>
+            <span th:each="instance : ${details.citation}"> <span
+                    th:if="${not #strings.startsWith(instance, 'http')}"
+                    th:text="${instance}"/> <a
+                    th:if="${#strings.startsWith(instance, 'http')}"
+                    th:href="@{inspect(url=${instance})}"><img
+                    src="images/paperIcon.png"/></a>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'license')} and ${not #arrays.isEmpty(details.license)}">
+        <div class="col-2">
+            <b>license</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.license}"> <span
+                        th:if="${not #strings.startsWith(instance, 'http')}"
+                        th:text="${instance}"/> <a
+                        th:if="${#strings.startsWith(instance, 'http')}"
+                        th:href="@{inspect(url=${instance})}"><img
+                        src="images/copyrightIcon.png"/></a>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'version')} and ${not #arrays.isEmpty(details.version)}">
+        <div class="col-2">
+            <b>version</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.version}">
+					<div class="row">
+						<div class="col">
+							<span th:if="${not #strings.startsWith(instance, 'http')}"
+                                  th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'dateModified')} and ${not #arrays.isEmpty(details.dateModified)}">
+        <div class="col-2">
+            <b>dateModified</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.dateModified}">
+					<div class="row">
+						<div class="col">
+							<span th:if="${not #strings.startsWith(instance, 'http')}"
+                                  th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'datePublished')} and ${not #arrays.isEmpty(details.datePublished)}">
+        <div class="col-2">
+            <b>datePublished</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.datePublished}">
+					<div class="row">
+						<div class="col">
+							<span th:if="${not #strings.startsWith(instance, 'http')}"
+                                  th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'creator')} and ${not #arrays.isEmpty(details.creator)}">
+        <div class="col-2">
+            <b>creator</b>
+        </div>
+
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.creator}">
+					<div class="row">
+						<div class="col">
+							<span th:if="${not #strings.startsWith(instance, 'http')}"
+                                  th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'publisher')} and ${not #arrays.isEmpty(details.publisher)}">
+        <div class="col-2">
+            <b>publisher</b>
+        </div>
+
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.publisher}">
+					<div class="row">
+						<div class="col">
+							<span th:if="${not #strings.startsWith(instance, 'http')}"
+                                  th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'funder')} and ${not #arrays.isEmpty(details.funder)}">
+        <div class="col-2">
+            <b>funder</b>
+        </div>
+
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.funder}">
+					<div class="row">
+						<div class="col">
+							<span th:if="${not #strings.startsWith(instance, 'http')}"
+                                  th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <!--  dataset -->
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'variableMeasured')} and ${not #arrays.isEmpty(details.variableMeasured)}">
+        <div class="col-2">
+            <b>variableMeasured</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.variableMeasured}">
+					<div class="row">
+						<div class="col">
+							<span th:if="${not #strings.startsWith(instance, 'http')}"
+                                  th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'distribution')} and ${not #arrays.isEmpty(details.distribution)}">
+        <div class="col-2">
+            <b>distribution</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.distribution}"> <span
+                        th:if="${not #strings.startsWith(instance, 'http')}"
+                        th:text="${instance}"/> <a
+                        th:if="${#strings.startsWith(instance, 'http')}"
+                        th:href="@{inspect(url=${instance})}"><img
+                        src="images/vanIcon.png"/></a>
+				</span>
+
+            <!-- 				<div class="col" th:text="${instance}" />
+                    <span th:each="instance : ${details.distribution}">
+                        <div class="row">
+                            <div class="col"
+                                th:if="${not #strings.startsWith(instance, 'http')}"
+                                th:text="${instance}" />
+                            <div class="col"
+                                th:if="${#strings.startsWith(instance, 'http')}">
+                                <a th:href="@{inspect(url=${instance})}" th:text="${instance}" />
+                            </div>
+                        </div>
+                    </span> -->
+        </div>
+    </div>
+
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'contentURL')} and ${not #arrays.isEmpty(details.contentURL)}">
+        <div class="col-2">
+            <b>contentURL</b>
+        </div>
+        <div class="col-10" align="left">
+            <div class="col" th:text="${instance}"/>
+            <span th:each="instance : ${details.contentURL}">
+					<div class="row">
+						<div class="col"
+                             th:if="${not #strings.startsWith(instance, 'http') AND not #strings.startsWith(instance, 'ftp')}"
+                             th:text="${instance}"/>
+						<div class="col"
+                             th:if="${#strings.startsWith(instance, 'http') OR #strings.startsWith(instance, 'ftp')}">
+							<a th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'fileFormat')} and ${not #arrays.isEmpty(details.fileFormat)}">
+        <div class="col-2">
+            <b>fileFormat</b>
+        </div>
+        <div class="col-10" align="left">
+            <div class="col" th:text="${instance}"/>
+            <span th:each="instance : ${details.fileFormat}">
+					<div class="row">
+						<div class="col"
+                             th:if="${not #strings.startsWith(instance, 'http')}"
+                             th:text="${instance}"/>
+						<div class="col" th:if="${#strings.startsWith(instance, 'http')}">
+							<a th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'includedInDataCatalog')} and ${not #arrays.isEmpty(details.includedInDataCatalog)}">
+        <div class="col-2">
+            <b>includedInDataCatalog</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.includedInDataCatalog}">
+					<div class="row">
+						<div class="col">
+							<a th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+
+    <!--  molecularEntity -->
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'image')} and ${not #arrays.isEmpty(details.image)}">
+        <div class="col-2">
+            <b>image</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.image}"> <img
+                        class="center-block" th:src="${instance}" width="300" height="300"/>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'molecularFormaula')} and ${not #arrays.isEmpty(details.molecularFormula)}">
+        <div class="col-2">
+            <b>molecularFormaula</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.molecularFormula}"> <span
+                        th:text="${instance}"/>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'molecularWeight')} and ${not #arrays.isEmpty(details.molecularFormula)}">
+        <div class="col-2">
+            <b>molecularWeight</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.molecularWeight}"> <span
+                        th:text="${instance}"/>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'monoisotopicMolecularWeight')} and ${not #arrays.isEmpty(details.monoisotopicMolecularWeight)}">
+        <div class="col-2">
+            <b>monoisotopic<br/>MolecularWeight
+            </b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.monoisotopicMolecularWeight}">
+					<span th:text="${instance}"/>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'inChI')} and ${not #arrays.isEmpty(details.inChI)}">
+        <div class="col-2">
+            <b>inChI</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.inChI}"> <span
+                        th:text="${instance}"/>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'inChIKey')} and ${not #arrays.isEmpty(details.inChIKey)}">
+        <div class="col-2">
+            <b>inChIKey</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.inChIKey}"> <span
+                        th:text="${instance}"/>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'canonical_smiles')} and ${not #arrays.isEmpty(details.canonical_smiles)}">
+        <div class="col-2">
+            <b>canonical_smiles</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.canonical_smiles}"> <span
+                        th:text="${instance}"/>
+				</span>
+        </div>
+    </div>
+
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'biochemicalInteraction')} and ${not #arrays.isEmpty(details.biochemicalInteraction)}">
+        <div class="col-2">
+            <b>biochemicalInteraction</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance : ${details.biochemicalInteraction}">
+					<div class="row">
+						<div class="col">
+							<span th:text="${instance}"/>
+						</div>
+					</div> <!--  <a
+							th:href="@{inspect(url=${instance})}" th:text="${instance}" /> -->
+				</span>
+        </div>
+    </div>
+
+
+    <!--  datacatalog -->
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'dataset')} and ${not #arrays.isEmpty(details.dataset)}">
+        <div class="col-2">
+            <b>dataset</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.dataset}"> <!--  <a
+							th:href="@{inspect(url=${instance})}" th:text="${itStat.count}" /> -->
+					<a th:href="@{inspect(url=${instance})}"><img
+                            src="images/repoIcon.png"/></a>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'provider')} and ${not #arrays.isEmpty(details.provider)}">
+        <div class="col-2">
+            <b>provider</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.provider}"> <span
+                        th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                        th:text="${instance}"/> <a
+                        th:if="${#strings.startsWith(instance, 'http')}"
+                        th:href="@{inspect(url=${instance})}"><img
+                        src="images/handIcon.png"/> </a> <a
+                        th:if="${#strings.startsWith(instance, 'ftp')}"
+                        th:href="${instance}" th:text="${instance}"/></span>
+        </div>
+    </div>
+
+    <!--  provider -->
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'logo')} and ${not #arrays.isEmpty(details.logo)}">
+        <div class="col-2">
+            <b>logo</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance: ${details.logo}"> <img
+                        class="center-block" th:src="${instance}" width="30" height="30"/>
+        </div>
+        </span>
+    </div>
+
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'email')} and ${not #arrays.isEmpty(details.email)}">
+        <div class="col-2">
+            <b>email</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.email}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'telephone')} and ${not #arrays.isEmpty(details.telephone)}">
+        <div class="col-2">
+            <b>telephone</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.telephone}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <!--  author -->
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'author')} and ${not #arrays.isEmpty(details.author)}">
+        <div class="col-2">
+            <b>author</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.author}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'givenName')} and ${not #arrays.isEmpty(details.givenName)}">
+        <div class="col-2">
+            <b>givenName</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.givenName}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'familyName')} and ${not #arrays.isEmpty(details.familyName)}">
+        <div class="col-2">
+            <b>familyName</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.familyName}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'affiliation')} and ${not #arrays.isEmpty(details.affiliation)}">
+        <div class="col-2">
+            <b>affiliation</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.affiliation}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <!--  address -->
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'address')} and ${not #arrays.isEmpty(details.address)}">
+        <div class="col-2">
+            <b>address</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.address}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'streetAddress')} and ${not #arrays.isEmpty(details.streetAddress)}">
+        <div class="col-2">
+            <b>streetAddress</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.streetAddress}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'addressLocality')} and ${not #arrays.isEmpty(details.addressLocality)}">
+        <div class="col-2">
+            <b>addressLocality</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.addressLocality}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'postalCode')} and ${not #arrays.isEmpty(details.postalCode)}">
+        <div class="col-2">
+            <b>postalCode</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.postalCode}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'addressRegion')} and ${not #arrays.isEmpty(details.addressRegion)}">
+        <div class="col-2">
+            <b>addressRegion</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.addressRegion}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'addressCountry')} and ${not #arrays.isEmpty(details.addressCountry)}">
+        <div class="col-2">
+            <b>addressCountry</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.addressCountry}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <!-- PV -->
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'propertyID')} and ${not #arrays.isEmpty(details.propertyID)}">
+        <div class="col-2">
+            <b>propertyID</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.propertyID}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'value')} and ${not #arrays.isEmpty(details.value)}">
+        <div class="col-2">
+            <b>value</b>
+        </div>
+        <div class="col-10" align="left">
+				<span th:each="instance,itStat : ${details.value}">
+					<div class="row">
+						<div class="col">
+							<span
+                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                    th:text="${instance}"/> <a
+                                th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+						</div>
+					</div>
+				</span>
+        </div>
+    </div>
+    <hr
+            style="height: 2px; color: #0B794B; background-color: #0B794B; border: none;"/>
+</div>
+
+
+<br/>
+
+
+<div class="container">
+    <a data-toggle="collapse" href="#metaProvCollapse">Show metadata</a>
+
+    <div class="collapse" id="metaProvCollapse">
+        <div class="row"
+             th:if="${#maps.containsKey(details, 'type')} and ${not #arrays.isEmpty(details.type)}">
+            <div class="col-2">
+                <b>type</b>
+            </div>
+            <div class="col-10" align="left">
+					<span th:each="instance : ${details.type}">
+						<div class="row">
+							<div class="col">
+								<a th:href="${instance}" th:text="${instance}"/>
+							</div>
+						</div>
+					</span>
+            </div>
+        </div>
+        <div class="row"
+             th:if="${#maps.containsKey(details, 'pulledOn')} and ${not #arrays.isEmpty(details.pulledOn)}">
+            <div class="col-2">
+                <b>pulledOn</b>
+            </div>
+            <div class="col-10" align="left">
+                <span th:text="${details.pulledOn[0]}"/>
+            </div>
+        </div>
+        <div class="row"
+             th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)}">
+            <div class="col-2">
+                <b>pulledFrom &#x2192;</b>
+            </div>
+            <div class="col-10" align="left">
+                <a th:href="${details.pulledFrom[0]}"
+                   th:text="${details.pulledFrom[0]}"/>
+            </div>
+        </div>
+        <br/>
+        <div class="row"
+             th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)} and ${not #strings.equals(details.pulledFrom[0], url)}">
+            <div class="col-2">
+                <b>View on BKgE &#x2190;</b>
+            </div>
+            <div class="col-10" align="left">
+                <a th:href="@{inspect(url=${details.pulledFrom[0]})}"
+                   th:text="${details.pulledFrom[0]}"/>
+            </div>
+        </div>
+        <br/>
+        <div class="row"
+             th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)} and ${ #strings.equals(details.pulledFrom[0], url)}">
+            <div class="col-2">
+                <b>View on BKgE &#x2193;</b>
+            </div>
+            <div class="col-10" align="left">
+                <span th:text="${details.pulledFrom[0]}"/>
+            </div>
+        </div>
+        <div class="row"
+             th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)}">
+            <div class="col-2">
+                <b>View on GSDTT &#x2192;</b>
+            </div>
+            <div class="col-10" align="left">
+                <a th:href="@{https://search.google.com/structured-data/testing-tool#(url=${details.pulledFrom[0]})}"
+                   th:text="${details.pulledFrom[0]}"/>
+            </div>
+        </div>
+    </div>
+    <hr
+            style="height: 2px; color: #0B794B; background-color: #0B794B; border: none;"/>
+</div>
+
+
+<!--  -->
+<br/>
+<div class="container"
+     th:if="${#maps.containsKey(details, 'type')} and ${not #arrays.isEmpty(details.type)}">
+    <div class="row">
+        <div class="col-lg">
+            <div>
+                <span>Click to search for more pages of type: </span>
+                <div class="row top-buffer" th:each="instance : ${details.type}">
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col-md-6">
+                        <a th:href="@{list(type=${instance})}" th:text="${instance}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--  footer goes here -->
+<div class="container" th:replace="fragments/footer :: footer">
+    <p>footer</p>
+</div>
+
+
+<!--  BOOTSTRAP, JQUERY ETC -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
