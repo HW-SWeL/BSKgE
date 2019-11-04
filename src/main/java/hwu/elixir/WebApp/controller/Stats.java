@@ -16,7 +16,7 @@ import hwu.elixir.dataAccess.TripleStoreWrapper;
 @Controller
 public class Stats {
 
-    private static Logger logger = LoggerFactory.getLogger(Stats.class);
+    private static Logger logger = LoggerFactory.getLogger(System.class.getName());
 
     private TripleStoreWrapper dbms = new TripleStoreWrapper();
 

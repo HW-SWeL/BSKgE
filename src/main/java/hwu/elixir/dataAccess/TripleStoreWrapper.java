@@ -26,7 +26,7 @@ public class TripleStoreWrapper {
 	private RepositoryConnection con;
 	private VirtuosoRepository repository;
 
-	private static Logger logger = LoggerFactory.getLogger("hwu.elixir.dataAccess");
+	private static Logger logger = LoggerFactory.getLogger(System.class.getName());
 
 	/** 
 	 * Read connection details from database.properties and opens a connection to a virtuoso repository

@@ -17,7 +17,7 @@ import hwu.elixir.dataAccess.TripleStoreWrapper;
 @Controller
 public class Search {
 
-    private static Logger logger = LoggerFactory.getLogger(Search.class);
+    private static Logger logger = LoggerFactory.getLogger(System.class.getName());
 
     private TripleStoreWrapper dbms = new TripleStoreWrapper();
 
