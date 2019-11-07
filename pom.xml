@@ -12,7 +12,7 @@
 	<groupId>hwu.elixir</groupId>
 	<artifactId>WebApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>EE-WebApp</name>
+	<name>BSKgE</name>
 	<description>WebApp for Elixir crawl</description>
 	<packaging>war</packaging>
 
@@ -67,7 +67,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>EE-WebApp</finalName>
+		<finalName>BSKgE</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
