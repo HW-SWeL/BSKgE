@@ -48,7 +48,12 @@ public class QueryDetails {
         details = processMeta(details, sparql, url);
 
 
-
+        // remove trailing -X (where X is a number up to 3 digits) that are added to some URLs to distinguish between nested elements
+        // only necessary for URL param as it needs to point to the source page
+        String endOfUrl = new StringBuffer(url.subSequence(url.length()-4, url.length())).toString();
+        if(endOfUrl.contains("-")) {
+            url = url.substring(0, url.lastIndexOf("-"));
+        }
 
         model.addAttribute("url", url);
         model.addAttribute("details", details);
@@ -118,6 +123,7 @@ public class QueryDetails {
                         || (object.stringValue().startsWith("https://www.w3.org/"))) {
                     continue;
                 }
+
                 details = addToHashSet(details, object, predicateString);
             }
         }
