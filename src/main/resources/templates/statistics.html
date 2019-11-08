@@ -1,116 +1,125 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<title>BSKgE</title>
-<style>
-.top-buffer {
-	margin-top: 10px;
-}
-</style>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <title>BSKgE</title>
+    <style>
+        .top-buffer {
+            margin-top: 10px;
+        }
+    </style>
 </head>
+
 <body>
-	<!--  header goes here -->
-	<div class="container" th:replace="fragments/header :: header">
-		<p>header</p>
-	</div>
+    <!--  header goes here -->
+    <div class="container" th:replace="fragments/header :: header">
+        <p>header</p>
+    </div>
 
-	<br />
+    <br />
 
-	<div class="container">
-		<div class="row" th:if="${totalNumberGraphs != null}">
-			<div class="col">
-				Total number of pages crawled for this repository is <span class="font-weight-bold"
-																   th:text="${totalNumberGraphs}" />.
-			</div>
-		</div>
-		<div class="row" th:if="${totalNumberTriples != null}">
-			<div class="col">
-				Total number of triples in the repository is <span class="font-weight-bold"
-					th:text="${totalNumberTriples}" />.
-			</div>
-		</div> 
-		<br />
-		<span>Number of each Bioschema's concept in the repository is</span>
-		<table id="contentCountTable">
-			<tr> <!-- https://www.w3schools.com/howto/howto_js_sort_table.asp -->
-				<th onclick="sortTable(0)">Type</th>
-				<th onclick="sortTable(1)">Number</th>
-			</tr>
-			<span class="row top-buffer" th:each="instance : ${typeCount}">
-				<tr>
-					<td><a th:href="@{list(type=${instance.key})}" th:text="${instance.key}" /></td>
-					<td><span class="float-right" th:text="${instance.value}" /></td>
-				</tr>
-			</span>
-		</table>
-	</div>
- 
-	<!--  footer goes here -->
-	<div class="container" th:replace="fragments/footer :: footer">
-		<p>footer</p>
-	</div>
+    <div class="container">
+        <div class="row" th:if="${totalNumberGraphs != null}">
+            <div class="col">
+                Total number of pages crawled for this repository is <span class="font-weight-bold"
+                    th:text="${totalNumberGraphs}" />.
+            </div>
+        </div>
+        <br />
+        <span>Number of each Bioschema's concept in the repository is</span>
+        <table id="statsTable" class="table">
+            <tr>
+                <th onclick="sortTable(0);">Type</th>
+                <th onclick="sortTable(1);">Count</th>
+            </tr>
+            <span th:each="instance : ${typeCount}">
+                <tr class="item">
+                    <td>
+                        <a th:href="@{list(type=${instance.key})}" th:text="${instance.key}" />
+                    </td>
+                    <td th:text="${instance.value}" />
+                </tr>
+            </span>
+        </table>
+    </div>
+
+    <!--  footer goes here -->
+    <div class="container" th:replace="fragments/footer :: footer">
+        <p>footer</p>
+    </div>
+
+    <!-- sorting code based on https://www.w3schools.com/howto/howto_js_sort_table.asp -->
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("statsTable");
+            switching = true;
+            dir = "asc";
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    if (n == 0) {
+                        if (dir == "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        if (dir == "asc") {
+                            if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (Number(x.innerHTML) < Number(y.innerHTML)) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
 
 
-	<!-- sort table -->
-	<script>
-		function sortTable(n) {
-			var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-			table = document.getElementById("contentCountTable");
-			switching = true;
-			dir = "asc";
-			while (switching) {
-				switching = false;
-				rows = table.rows;
-				for (i = 1; i < (rows.length - 1); i++) {
-					shouldSwitch = false;
-					x = rows[i].getElementsByTagName("TD")[n];
-					y = rows[i + 1].getElementsByTagName("TD")[n];
-					if (dir == "asc") {
-						if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-							shouldSwitch = true;
-							break;
-						}
-					} else if (dir == "desc") {
-						if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-							shouldSwitch = true;
-							break;
-						}
-					}
-				}
-				if (shouldSwitch) {
-					rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-					switching = true;
-					switchcount ++;
-				} else {
-					if (switchcount == 0 && dir == "asc") {
-						dir = "desc";
-						switching = true;
-					}
-				}
-			}
-		}
-	</script>
+    <!--  BOOTSTRAP, JQUERY ETC -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
 
-
-
-	<!--  BOOTSTRAP, JQUERY ETC -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
 </body>
+
 </html>
