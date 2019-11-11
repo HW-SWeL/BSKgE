@@ -56,7 +56,7 @@
         </div>
         <div class="col-10" align="left">
 				<span th:each="instance : ${details.alternateName}"> <span
-                        th:text="${instance}"/> &nbsp;
+                        th:text="${instance}"/>. &nbsp;
 				</span>
         </div>
     </div>
@@ -688,7 +688,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -710,7 +710,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -733,7 +733,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -755,7 +755,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -777,7 +777,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -799,7 +799,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -822,7 +822,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -844,7 +844,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -866,7 +866,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -888,7 +888,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -910,7 +910,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -932,7 +932,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -955,7 +955,7 @@
                                     th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                     th:text="${instance}"/> <a
                                 th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
 						</div>
@@ -970,21 +970,70 @@
             <b>value</b>
         </div>
         <div class="col-10" align="left">
-				<span th:each="instance,itStat : ${details.value}">
-					<div class="row">
-						<div class="col">
-							<span
-                                    th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
-                                    th:text="${instance}"/> <a
-                                th:if="${#strings.startsWith(instance, 'http')}"
-                                th:href="@{inspect(url=${instance})}" th:text="${itStat.count}"/>
+            <span th:each="instance,itStat : ${details.value}">
+				<div class="row">
+					<div class="col">
+						<span
+                                th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                th:text="${instance}"/>
+                            <a th:if="${#strings.startsWith(instance, 'http')}"
+                               th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
 							<a th:if="${#strings.startsWith(instance, 'ftp')}"
                                th:href="${instance}" th:text="${instance}"/>
-						</div>
-					</div>
-				</span>
+                    </div>
+                </div>
+            </span>
         </div>
     </div>
+
+
+    <!-- taxon -->
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'parentTaxon')} and ${not #arrays.isEmpty(details.parentTaxon)}">
+        <div class="col-2">
+            <b>parentTaxon</b>
+        </div>
+        <div class="col-10" align="left">
+            <span th:each="instance,itStat : ${details.parentTaxon}">
+				<div class="row">
+					<div class="col">
+						<span
+                                th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                th:text="${instance}"/>
+                            <a th:if="${#strings.startsWith(instance, 'http')}"
+                               th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+                    </div>
+                </div>
+            </span>
+        </div>
+    </div>
+    <div class="row top-buffer"
+         th:if="${#maps.containsKey(details, 'taxonRank')} and ${not #arrays.isEmpty(details.taxonRank)}">
+        <div class="col-2">
+            <b>taxonRank</b>
+        </div>
+        <div class="col-10" align="left">
+            <span th:each="instance,itStat : ${details.taxonRank}">
+				<div class="row">
+					<div class="col">
+						<span
+                                th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                th:text="${instance}"/>
+                            <a th:if="${#strings.startsWith(instance, 'http')}"
+                               th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+							<a th:if="${#strings.startsWith(instance, 'ftp')}"
+                               th:href="${instance}" th:text="${instance}"/>
+                    </div>
+                </div>
+            </span>
+        </div>
+    </div>
+
+
+    <!-- END OF BODY -->
+
     <hr
             style="height: 2px; color: #0B794B; background-color: #0B794B; border: none;"/>
 </div>
@@ -1012,6 +1061,24 @@
 					</span>
             </div>
         </div>
+        <div class="row"
+             th:if="${#maps.containsKey(details, 'additionalType')} and ${not #arrays.isEmpty(details.additionalType)}">
+            <div class="col-2">
+                <b>additionalType</b>
+            </div>
+            <div class="col-10" align="left">
+                    <span th:each="instance,itStat : ${details.additionalType}">
+                        <span
+                                th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
+                                th:text="${instance}"/>
+                        <a th:if="${#strings.startsWith(instance, 'http')}"
+                           th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+                        <a th:if="${#strings.startsWith(instance, 'ftp')}"
+                           th:href="${instance}" th:text="${instance}"/>
+                    .</span>
+            </div>
+        </div>
+
         <div class="row"
              th:if="${#maps.containsKey(details, 'pulledOn')} and ${not #arrays.isEmpty(details.pulledOn)}">
             <div class="col-2">
