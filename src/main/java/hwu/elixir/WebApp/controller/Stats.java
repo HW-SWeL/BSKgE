@@ -55,13 +55,23 @@ public class Stats {
             BindingSet bindingSet = result.next();
 
             String type = bindingSet.getValue("type").stringValue();
+
+            if(!type.startsWith("https://schema.org") && !type.startsWith("https://schema.org")) {
+                continue;
+            }
+
             String number = bindingSet.getValue("number").stringValue();
             if (type.contains("MolecularEntity") ||
                     type.contains("Sample") ||
-//                    type.contains("BioChemEntity") ||
+                    type.contains("BioChemEntity") ||
                     type.contains("Dataset") ||
+                    type.contains("Taxon") ||
                     type.contains("DataCatalog")) {
-                allTypes.put(type.replaceFirst("https://schema.org/", ""), number);
+                type = type.replaceFirst("https://schema.org/", "");
+                type = type.replaceFirst("http://schema.org/", "");
+                type = type.replaceFirst("https://bioschemas.org/", "");
+                type = type.replaceFirst("http://bioschemas.org/", "");
+                allTypes.put(type, number);
             }
         }
 
