@@ -1068,70 +1068,74 @@
             </div>
             <div class="col-10" align="left">
                     <span th:each="instance,itStat : ${details.additionalType}">
-                        <span
+                        <div class="row">
+                            <div class="col">
+                                <span
                                 th:if="${not #strings.startsWith(instance, 'http') and not #strings.startsWith(instance, 'ftp')}"
                                 th:text="${instance}"/>
-                        <a th:if="${#strings.startsWith(instance, 'http')}"
-                           th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
-                        <a th:if="${#strings.startsWith(instance, 'ftp')}"
-                           th:href="${instance}" th:text="${instance}"/>
-                    .</span>
+                                <a th:if="${#strings.startsWith(instance, 'http')}"
+                                th:href="@{inspect(url=${instance})}" th:text="${instance}"/>
+                                <a th:if="${#strings.startsWith(instance, 'ftp')}"
+                                th:href="${instance}" th:text="${instance}"/>
+                            </div>
+                        </div>
+                    </span>
             </div>
         </div>
 
-        <div class="row"
-             th:if="${#maps.containsKey(details, 'pulledOn')} and ${not #arrays.isEmpty(details.pulledOn)}">
-            <div class="col-2">
-                <b>pulledOn</b>
-            </div>
-            <div class="col-10" align="left">
-                <span th:text="${details.pulledOn[0]}"/>
-            </div>
+    <div class="row"
+         th:if="${#maps.containsKey(details, 'pulledOn')} and ${not #arrays.isEmpty(details.pulledOn)}">
+        <div class="col-2">
+            <b>pulledOn</b>
         </div>
-        <div class="row"
-             th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)}">
-            <div class="col-2">
-                <b>pulledFrom &#x2192;</b>
-            </div>
-            <div class="col-10" align="left">
-                <a th:href="${details.pulledFrom[0]}"
-                   th:text="${details.pulledFrom[0]}"/>
-            </div>
-        </div>
-        <br/>
-        <div class="row"
-             th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)} and ${not #strings.equals(details.pulledFrom[0], url)}">
-            <div class="col-2">
-                <b>View on BKgE &#x2190;</b>
-            </div>
-            <div class="col-10" align="left">
-                <a th:href="@{inspect(url=${details.pulledFrom[0]})}"
-                   th:text="${details.pulledFrom[0]}"/>
-            </div>
-        </div>
-        <br/>
-        <div class="row"
-             th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)} and ${ #strings.equals(details.pulledFrom[0], url)}">
-            <div class="col-2">
-                <b>View on BKgE &#x2193;</b>
-            </div>
-            <div class="col-10" align="left">
-                <span th:text="${details.pulledFrom[0]}"/>
-            </div>
-        </div>
-        <div class="row"
-             th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)}">
-            <div class="col-2">
-                <b>View on GSDTT &#x2192;</b>
-            </div>
-            <div class="col-10" align="left">
-                <a th:href="@{https://search.google.com/structured-data/testing-tool#(url=${details.pulledFrom[0]})}"
-                   th:text="${details.pulledFrom[0]}"/>
-            </div>
+        <div class="col-10" align="left">
+            <span th:text="${details.pulledOn[0]}"/>
         </div>
     </div>
-    <hr
-            style="height: 2px; color: #0B794B; background-color: #0B794B; border: none;"/>
+    <div class="row"
+         th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)}">
+        <div class="col-2">
+            <b>pulledFrom &#x2192;</b>
+        </div>
+        <div class="col-10" align="left">
+            <a th:href="${details.pulledFrom[0]}"
+               th:text="${details.pulledFrom[0]}"/>
+        </div>
+    </div>
+    <br/>
+    <div class="row"
+         th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)} and ${not #strings.equals(details.pulledFrom[0], url)}">
+        <div class="col-2">
+            <b>View on BKgE &#x2190;</b>
+        </div>
+        <div class="col-10" align="left">
+            <a th:href="@{inspect(url=${details.pulledFrom[0]})}"
+               th:text="${details.pulledFrom[0]}"/>
+        </div>
+    </div>
+    <br/>
+    <div class="row"
+         th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)} and ${ #strings.equals(details.pulledFrom[0], url)}">
+        <div class="col-2">
+            <b>View on BKgE &#x2193;</b>
+        </div>
+        <div class="col-10" align="left">
+            <span th:text="${details.pulledFrom[0]}"/>
+        </div>
+    </div>
+    <div class="row"
+         th:if="${#maps.containsKey(details, 'pulledFrom')} and ${not #arrays.isEmpty(details.pulledFrom)}">
+        <div class="col-2">
+            <b>View on GSDTT &#x2192;</b>
+        </div>
+        <div class="col-10" align="left">
+            <a th:href="@{https://search.google.com/structured-data/testing-tool#(url=${details.pulledFrom[0]})}"
+               th:text="${details.pulledFrom[0]}"/>
+        </div>
+    </div>
+</div>
+<hr
+        style="height: 2px; color: #0B794B; background-color: #0B794B; border: none;"/>
 </div>
 
 
