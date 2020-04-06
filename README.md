@@ -2,7 +2,7 @@
 Bioschemas Knowledge Graph Explorer
 
 ## Description
-Browsing and navigation of triplestore populated by utilising [Scraper](https://github.com/HW-SWeL/Scraper).
+Browsing and navigation of triplestore populated by utilising [BMUSE](https://github.com/HW-SWeL/BMUSE).
 
 
 
